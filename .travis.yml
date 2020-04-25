@@ -8,3 +8,15 @@ before_install:
   - docker build -t manjiltamang/docker-react -f Dockerfile.dev .
 script:
   - docker run -e CI=true manjiltamang/docker-react npm run test -- --coverage
+
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-south-1"
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-ap-south-1-918237149323"
+  bucket_path: "docker-react"
+  on: # Only deploy when changed are pushed to master branch
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
