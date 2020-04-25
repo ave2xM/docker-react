@@ -2,7 +2,7 @@ FROM node:alpine as builder
 
 WORKDIR '/app'
 
-COPY package.json .
+COPY package*.json ./
 
 RUN npm install
 
@@ -21,4 +21,4 @@ FROM nginx
 EXPOSE 80
 
 # Copy something from builder which is /app/build folder and paste it to /use/share/nginx/html dir which is root nginx server folder
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY --from=0 /app/build /usr/share/nginx/html
